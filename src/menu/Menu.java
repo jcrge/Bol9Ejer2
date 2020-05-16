@@ -3,11 +3,16 @@ package menu;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Menu extends JFrame {
     private static int MARGIN_LEFT = 10;
     private static int MARGIN_TOP = 10;
+    private static String stringsFilePath =   System.getProperty("user.home")
+                                            + System.getProperty("file.separator")
+                                            + ".bol9ejer2";
 
     private KeyboardPanel pnlKeyboard;
     private JTextField txfInput;
@@ -134,6 +139,24 @@ public class Menu extends JFrame {
     private class ShowSavedStringsListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
+            String wholeFile = "";
+            try (Scanner f = new Scanner(new File(stringsFilePath))) {
+                while (f.hasNext()) {
+                    wholeFile += f.nextLine() + "\n";
+                }
+
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Números guardados:\n\n" + wholeFile,
+                    "Números guardados",
+                    JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Aún no se han guardado números",
+                    "Información",
+                    JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }
 

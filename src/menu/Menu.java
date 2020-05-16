@@ -140,6 +140,7 @@ public class Menu extends JFrame {
     private class QuitListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
+            Menu.this.dispose();
         }
     }
 

@@ -8,7 +8,7 @@ public class App {
         Menu menu = new Menu();
 
         menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menu.setSize(300, 400);
+        menu.setSize(200, 340);
         menu.setVisible(true);
     }
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class KeyboardPanel extends JPanel {
     private JButton[][] btnKeys;
+    private ArrayList<String> availableKeys;
     private ArrayList<KeyboardInputListener> keyboardInputListeners;
     private int idealWidth;
     private int idealHeight;
@@ -25,6 +26,8 @@ public class KeyboardPanel extends JPanel {
             }
         }
 
+        availableKeys = new ArrayList<>();
+
         btnKeys = new JButton[keys.length][];
 
         int panelW = getButtonLineLength(getLongestRowLength(keys), buttonW, hSep);
@@ -39,6 +42,8 @@ public class KeyboardPanel extends JPanel {
             int buttonY = (buttonH + vSep)*mapY;
             for (int mapX = 0; mapX < keys[mapY].length; mapX++) {
                 int buttonX = baseX + (buttonW + hSep)*mapX;
+
+                availableKeys.add(keys[mapY][mapX]);
 
                 JButton currButton = new JButton(keys[mapY][mapX]);
                 currButton.setLocation(buttonX, buttonY);
@@ -118,6 +123,10 @@ public class KeyboardPanel extends JPanel {
                 listener.keyboardInputReceived(key);
             }
         }
+    }
+
+    public ArrayList<String> getAvailableKeys() {
+        return new ArrayList<String>(availableKeys);
     }
 
     private static int getButtonLineLength(int keyNum, int buttonSize, int buttonSep) {

@@ -3,6 +3,7 @@ package menu;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Menu extends JFrame {
     private static int MARGIN_LEFT = 10;
@@ -36,12 +37,30 @@ public class Menu extends JFrame {
         pnlKeyboard.setLocation(MARGIN_LEFT, MARGIN_TOP + txfInput.getHeight() + 10);
         pnlKeyboard.addKeyboardInputListener(new KeyPressReceiver());
         add(pnlKeyboard);
+
+        addKeyListener(new KeyboardPanelKeyListener());
+        setFocusable(true);
     }
 
     private class KeyPressReceiver implements KeyboardInputListener {
         @Override
         public void keyboardInputReceived(String key) {
-            txfInput.setText(txfInput.getText() + key);
+            handleKey(key.toLowerCase());
         }
+    }
+
+    private class KeyboardPanelKeyListener extends KeyAdapter {
+        @Override
+        public void keyTyped(KeyEvent e) {
+            for (String key: pnlKeyboard.getAvailableKeys()) {
+                if (key.equalsIgnoreCase("" + e.getKeyChar())) {
+                    handleKey(key.toLowerCase());
+                }
+            }
+        }
+    }
+
+    private void handleKey(String key) {
+        txfInput.setText(txfInput.getText() + key);
     }
 }

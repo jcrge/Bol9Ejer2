@@ -11,6 +11,7 @@ public class Menu extends JFrame {
 
     private KeyboardPanel pnlKeyboard;
     private JTextField txfInput;
+    private JButton btnReset;
 
     public Menu() {
         super("Boletín 9, Ejercicio 2");
@@ -38,6 +39,12 @@ public class Menu extends JFrame {
         pnlKeyboard.addKeyboardInputListener(new KeyPressReceiver());
         add(pnlKeyboard);
 
+        btnReset = new JButton("Resetear");
+        btnReset.setLocation(MARGIN_LEFT, pnlKeyboard.getY() + pnlKeyboard.getHeight() + 10);
+        btnReset.setSize(pnlKeyboard.getWidth(), (int)btnReset.getPreferredSize().getHeight());
+        btnReset.addActionListener(new FormResetter());
+        add(btnReset);
+
         addKeyListener(new KeyboardPanelKeyListener());
         setFocusable(true);
     }
@@ -57,6 +64,14 @@ public class Menu extends JFrame {
                     handleKey(key.toLowerCase());
                 }
             }
+        }
+    }
+
+    private class FormResetter implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            pnlKeyboard.resetState();
+            txfInput.setText("");
         }
     }
 

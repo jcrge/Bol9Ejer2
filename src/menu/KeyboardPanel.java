@@ -111,6 +111,11 @@ public class KeyboardPanel extends JPanel {
             isClicked = true;
             button.setBackground(clickedColor);
         }
+
+        public void resetState() {
+            isClicked = false;
+            button.setBackground(notClickedColor);
+        }
     }
 
     private class ButtonActionListener implements ActionListener {
@@ -127,6 +132,18 @@ public class KeyboardPanel extends JPanel {
 
     public ArrayList<String> getAvailableKeys() {
         return new ArrayList<String>(availableKeys);
+    }
+
+    public void resetState() {
+        for (int i = 0; i < btnKeys.length; i++) {
+            for (int j = 0; j < btnKeys[i].length; j++) {
+                for (MouseListener listener: btnKeys[i][j].getMouseListeners()) {
+                    try {
+                        ((ButtonMouseListener)listener).resetState();
+                    } catch (ClassCastException e) { }
+                }
+            }
+        }
     }
 
     private static int getButtonLineLength(int keyNum, int buttonSize, int buttonSep) {

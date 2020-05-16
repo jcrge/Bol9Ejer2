@@ -147,6 +147,12 @@ public class Menu extends JFrame {
     private class AboutListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Este programa es una solución al ejercicio 2 del boletín 9.\n\n"
+                  + "Autor: Jorge\nVersión: 1.0",
+                "Información",
+                JOptionPane.INFORMATION_MESSAGE);
         }
     }
 

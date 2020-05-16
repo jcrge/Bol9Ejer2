@@ -43,9 +43,15 @@ public class KeyboardPanel extends JPanel {
                 JButton currButton = new JButton(keys[mapY][mapX]);
                 currButton.setLocation(buttonX, buttonY);
                 currButton.setSize(buttonW, buttonH);
-                currButton.addMouseListener(new ButtonMouseListener());
                 currButton.addActionListener(new ButtonActionListener());
                 add(currButton);
+
+                ButtonMouseListener listener = new ButtonMouseListener(
+                    currButton,
+                    new Color(0, 255, 255),
+                    new Color(0, 255, 0));
+                currButton.addMouseListener(listener);
+                currButton.addMouseMotionListener(listener);
 
                 btnKeys[mapY][mapX] = currButton;
             }
@@ -71,6 +77,35 @@ public class KeyboardPanel extends JPanel {
     }
 
     private class ButtonMouseListener extends MouseAdapter {
+        private JButton button;
+        private Color hoveredColor;
+        private Color clickedColor;
+        private Color notClickedColor;
+        private boolean isClicked;
+
+        public ButtonMouseListener(JButton button, Color hoveredColor, Color clickedColor) {
+            this.button = button;
+            this.hoveredColor = hoveredColor;
+            this.clickedColor = clickedColor;
+            this.notClickedColor = button.getBackground();
+            this.isClicked = false;
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            button.setBackground(hoveredColor);
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            button.setBackground(isClicked ? clickedColor : notClickedColor);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            isClicked = true;
+            button.setBackground(clickedColor);
+        }
     }
 
     private class ButtonActionListener implements ActionListener {

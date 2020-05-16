@@ -13,10 +13,66 @@ public class Menu extends JFrame {
     private JTextField txfInput;
     private JButton btnReset;
 
+    private JMenuBar mnuMainBar;
+    private JMenu mnuFile;
+    private JMenuItem mnuSave, mnuShow;
+    private JMenu mnuPhone;
+    private JMenuItem mnuReset, mnuQuit;
+    private JMenu mnuMore;
+    private JMenuItem mnuAbout;
+
     public Menu() {
         super("Boletín 9, Ejercicio 2");
         this.setLayout(null);
 
+        createMenu();
+        createGUI();
+    }
+
+    public void createMenu() {
+        mnuSave = new JMenuItem("Guardar");
+        mnuSave.setMnemonic('G');
+        mnuSave.addActionListener(new SaveInputListener());
+
+        mnuShow = new JMenuItem("Ver números guardados");
+        mnuShow.setMnemonic('V');
+        mnuShow.addActionListener(new ShowSavedStringsListener());
+
+        mnuFile = new JMenu("Archivo");
+        mnuFile.setMnemonic('A');
+        mnuFile.add(mnuSave);
+        mnuFile.add(mnuShow);
+
+        mnuReset = new JMenuItem("Resetear");
+        mnuReset.setMnemonic('R');
+        mnuReset.addActionListener(new FormResetter());
+
+        mnuQuit = new JMenuItem("Salir");
+        mnuQuit.setMnemonic('S');
+        mnuQuit.addActionListener(new QuitListener());
+
+        mnuPhone = new JMenu("Móvil");
+        mnuPhone.setMnemonic('M');
+        mnuPhone.add(mnuReset);
+        mnuPhone.addSeparator();
+        mnuPhone.add(mnuQuit);
+
+        mnuAbout = new JMenuItem("Acerca de...");
+        mnuAbout.setMnemonic('A');
+        mnuAbout.addActionListener(new AboutListener());
+
+        mnuMore = new JMenu("Otros");
+        mnuMore.setMnemonic('O');
+        mnuMore.add(mnuAbout);
+
+        mnuMainBar = new JMenuBar();
+        mnuMainBar.add(mnuFile);
+        mnuMainBar.add(mnuPhone);
+        mnuMainBar.add(mnuMore);
+        this.setJMenuBar(mnuMainBar);
+    }
+
+    public void createGUI() {
         String[][] keyboardKeys = new String[][] {
             { "1", "2", "3" },
             { "4", "5", "6" },
@@ -72,6 +128,30 @@ public class Menu extends JFrame {
         public void actionPerformed(ActionEvent event) {
             pnlKeyboard.resetState();
             txfInput.setText("");
+        }
+    }
+
+    private class ShowSavedStringsListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+        }
+    }
+
+    private class QuitListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+        }
+    }
+
+    private class AboutListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+        }
+    }
+
+    private class SaveInputListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
         }
     }
 

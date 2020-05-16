@@ -131,9 +131,13 @@ public class Menu extends JFrame {
     private class FormResetter implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
-            pnlKeyboard.resetState();
-            txfInput.setText("");
+            resetState();
         }
+    }
+
+    private void resetState() {
+        pnlKeyboard.resetState();
+        txfInput.setText("");
     }
 
     private class ShowSavedStringsListener implements ActionListener {
@@ -182,6 +186,31 @@ public class Menu extends JFrame {
     private class SaveInputListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
+            String string = Menu.this.txfInput.getText();
+            if (string.length() == 0) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Introduce el número que deseas guardar.",
+                    "Información",
+                    JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            try (PrintWriter f = new PrintWriter(new FileWriter(stringsFilePath, true))) {
+                f.println(string);
+                resetState();
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Se ha guardado el número introducido (" + string + ").",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Error de acceso al archivo: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
